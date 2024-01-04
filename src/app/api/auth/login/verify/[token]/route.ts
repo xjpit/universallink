@@ -13,6 +13,6 @@ export async function GET(req: NextRequest, {params}: {params: {token: string}})
         return response
     } catch (err: any) {
         console.log(err)
-        return NextResponse.json(NR.fail('Internal Server Error'), {status: 500})
+        return NextResponse.json(NR.fail(err), {status: 500})
     }
 }

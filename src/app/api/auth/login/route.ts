@@ -11,6 +11,6 @@ export async function POST(req: NextRequest) {
         return NextResponse.json(NR.success('Email has been sent to you'), {status: 200})
     } catch (err: any) {
         console.log(err)
-        return NextResponse.json(NR.fail('Internal Server Error'), {status: 500})
+        return NextResponse.json(NR.fail(err), {status: 500})
     }
 }
