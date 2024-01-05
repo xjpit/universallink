@@ -1,6 +1,6 @@
-import { NR } from "@/utils/network-manager";
-import { NextRequest, NextResponse } from "next/server";
-import { verifyMagicLinkAndGenerateJWT } from "../../services/login-services";
+import { NR } from "@/utils/network-manager"
+import { NextRequest, NextResponse } from "next/server"
+import { verifyMagicLinkAndGenerateJWT } from "../../../services/login-services"
 
 export async function GET(req: NextRequest) {
 
@@ -13,9 +13,7 @@ export async function GET(req: NextRequest) {
 
     try {
         const jwtToken = await verifyMagicLinkAndGenerateJWT(magicLinkToken)
-        let response = NextResponse.redirect(new URL('/home', req.url), {status: 302})
-        response.cookies.set('jwt', jwtToken, {httpOnly: true})
-        return response
+        return NextResponse.json(jwtToken, {status: 200})
     } catch (err: any) {
         console.log(err)
         return NextResponse.json(NR.fail(err), {status: 500})
