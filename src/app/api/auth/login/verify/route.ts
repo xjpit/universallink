@@ -13,8 +13,14 @@ export async function GET(req: NextRequest) {
 
     try {
         const jwtToken = await verifyMagicLinkAndGenerateJWT(magicLinkToken)
-        let response = NextResponse.redirect(new URL('/home', req.url), {status: 302})
-        response.cookies.set('jwt', jwtToken, {httpOnly: true})
+        let response;
+        if (req.headers.get('user-agent')!.includes('Mobile')) {
+            response = NextResponse.json(jwtToken, {status: 200})
+        } else {
+            // For web, set JWT in a cookie and redirect to the webpage
+            response = NextResponse.redirect(new URL('/home', req.url), {status: 302})
+            response.cookies.set('jwt', jwtToken, {httpOnly: true})
+        }
         return response
     } catch (err: any) {
         console.log(err)
