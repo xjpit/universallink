@@ -17,7 +17,7 @@ export async function validateEmailAndSendMagicLink(data: any) {
 
 
         const magicLinkToken = jwt.sign({email: data.email}, process.env.JWT_SECRET!, {expiresIn: 60 * 5})
-        let link = `${process.env.APP_URL}/api/auth/login/verify/${magicLinkToken}`
+        let link = `${process.env.APP_URL}/api/auth/login/verify?token=${magicLinkToken}`
 
         await sendMagicLink(data.email, link)
     } catch (err: any) {
